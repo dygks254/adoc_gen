@@ -1,0 +1,54 @@
+
+=Weekly Regression Report
+{% if detail %}
+==Total regression reposrt
+{% endif %}
+The results of the "regression" run over the weekend are available.
+
+[cols=5*,options=header]
+|===
+|IP/SS Name
+|TOTAL
+|PASSED
+|FAILED
+|PROGRESS(%)
+
+{%- for each in LATEST_RESULT %}
+|{{each}}
+|{{LATEST_RESULT[each].TOTAL}}
+|{{LATEST_RESULT[each].PASSED}}
+|{{LATEST_RESULT[each].FAILED}}
+|{{LATEST_RESULT[each].PROGRESS}} (%)
+{% endfor %}
+
+|TOTAL
+|{{PROJECT_TOTAL}}
+|{{PROJECT_PASSED}}
+|{{PROJECT_FAILED}}
+|{{PROJECT_PROGRESS}} (%)
+
+|===
+
+{% if detail %}
+==Test list regression reposrt
+
+{% for each in LATEST_RESULT %}
+=== TEST_LIST : {{each}}
+[cols=2*,options=header]
+|===
+|TEST Name
+|RESULT
+
+{% for each_test in LATEST_RESULT[each].TEST_CASES.PASSED_TEST_LISTS %}
+|{{each_test}}
+|PASSED
+{% endfor %}
+{%- for each_test in LATEST_RESULT[each].TEST_CASES.FAILED_TEST_LISTS %}
+|{{each_test}}
+|FAILED
+{% endfor %}
+
+|===
+{% endfor %}
+{% endif %}
+
